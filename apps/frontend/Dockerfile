@@ -1,10 +1,9 @@
-FROM node:20.9-slim
+FROM node:21.0-slim 
 
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN npm install -g http-server
+ENV NODE_ENV=development
+
 RUN mkdir /app && chown node:node /app
 USER node
 WORKDIR /app
 
-CMD [ "yarn", "serve" ]
+CMD ["yarn", "dev"]

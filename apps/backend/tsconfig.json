@@ -1,23 +1,28 @@
 {
   "compilerOptions": {
-    "target": "es2019",
     "module": "commonjs",
-    "strict": true,
-    "allowJs": false,
     "esModuleInterop": true,
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "target": "es2019",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./src",
     "incremental": true,
     "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
     "noUnusedLocals": true,
     "noImplicitReturns": true,
-    "preserveSymlinks": true,
-    "skipLibCheck": true
+    "strictPropertyInitialization": false,
+    "preserveSymlinks": true
   }
 }

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+set -u
+
+function create_database_and_grant() {
+  local database="team"
+  echo "  Creating database '$database' and grant"
+  psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+    CREATE DATABASE $database;
+    GRANT ALL PRIVILEGES ON DATABASE $database TO $POSTGRES_USER;
+    REVOKE ALL PRIVILEGES ON DATABASE $database FROM PUBLIC;
+    \connect $database;
+    REVOKE ALL ON SCHEMA public FROM PUBLIC;
+    REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM PUBLIC;
+    REVOKE ALL ON ALL TABLES IN SCHEMA public FROM PUBLIC;
+    GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO $POSTGRES_USER;
+    GRANT USAGE ON SCHEMA public TO $POSTGRES_USER;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE, TRIGGER ON TABLES TO $POSTGRES_USER;
+    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO $POSTGRES_USER;
+EOSQL
+}
+
+create_database_and_grant

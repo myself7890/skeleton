@@ -1,4 +1,4 @@
-FROM node:16.0-slim 
+FROM node:21.0-slim 
 
 ENV NODE_ENV=development
 

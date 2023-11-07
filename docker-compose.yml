@@ -8,9 +8,16 @@ services:
     ports:
       - '8080:8080'
     working_dir: /app/apps/backend
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DATABASE=team
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=abc123
+      - GMAIL_USERNAME=laporte.julie@gmail.com
+      - GMAIL_PASSWORD=xqfp yxnb boeb tsrc
     volumes:
       - .:/app:rw,cached
-    depends_on: 
+    depends_on:
       - postgres
     networks:
       - webnet
@@ -34,11 +41,13 @@ services:
     restart: unless-stopped
     volumes:
       - database-data:/var/lib/postgresql/data/
+      - ./apps/backend/scripts/db_init.sh:/docker-entrypoint-initdb.d/init.sh
     networks:
       - webnet
     environment:
       - POSTGRES_USER=app
-      - POSTGRES_PASSWORD=abcd0123
+      - POSTGRES_PASSWORD=abc123
+      - POSTGRES_DATABASE=team
 
 networks:
   webnet:
